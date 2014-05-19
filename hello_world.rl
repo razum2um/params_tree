@@ -4,21 +4,15 @@
   action T { @tail = p }
   action inject_key { @hash[key] = {} }
 
-  EOL = ('\n' | '\r\n');
-  DELIMITER = ([, ])+                            >H@T @{ log_event(:delimiter) };
-  LEVEL = [(]                                    >H@T @{ log_event(:level) };
-  END_LEVEL = [)]                                >H@T @{ log_event(:end_level) };
-  INPUT = (any - LEVEL - END_LEVEL - DELIMITER)+ >H@T @{ log_event(:input); memo_key; };
+  DELIMITER = (([, ])+ | '\n')                      >H@T @{ log_event(:delimiter) };
+  LEVEL = ('(')+                                    >H@T @{ log_event(:level) };
+  END_LEVEL = (')')+                                >H@T @{ log_event(:end_level); p + 1 == pe and @hash[key] = {}; };
+  INPUT = (any - LEVEL - END_LEVEL - DELIMITER)+    >H@T @{ log_event(:input); memo_key; };
 
   main := (
-    INPUT?
-    (DELIMITER @{ fnext main; } | LEVEL @{ @hash[key] = {}; @parent = @hash; @hash = @hash[key]; fcall nested; })
-  )*;
-
-  nested := (
     INPUT
-    (DELIMITER @{ @hash[key] = {}; fnext nested; } | END_LEVEL @{ @hash[key] = {}; @hash = @parent; fret; })
-  );
+    (DELIMITER @{ @hash[key] = {}; fnext main; } | END_LEVEL DELIMITER @{ @hash[key] = {}; @hash = @hash_stack.pop; fret; } | LEVEL @{ @hash[key] = {}; @hash_stack.push @hash; @hash = @hash[key]; fcall main; })
+  )*;
 }%%
 
 module ParamsTree
@@ -28,7 +22,7 @@ module ParamsTree
     def initialize
       @events = []
       @hash = {}
-      @parent = {}
+      @hash_stack = []
       @key = nil
       %% write data;
     end
@@ -40,10 +34,8 @@ module ParamsTree
       %% write init;
       %% write exec;
 
-      puts @events.inspect
-      puts key
-      puts @hash.inspect
-      puts @parent.inspect
+      #puts @events.inspect
+      puts @hash_stack.inspect
     end
 
     def char
@@ -68,4 +60,4 @@ module ParamsTree
   end
 end
 
-ParamsTree::Parser.new.process "default(all,usadasdid),isdsdd(wow,er),sed(rew,tre,yrt)"
+ParamsTree::Parser.new.process "default(all,usadasdid(zczxc(pio),cvb)),isdsdd(wow,er),sed(rew,tre,yrt)"
