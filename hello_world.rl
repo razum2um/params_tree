@@ -2,9 +2,9 @@
   machine params_parser;
   action H { @head = p }
   action T { @tail = p }
-  action inject_key { @hash[key] = {} }
-  action push { @hash_stack.push @hash; @hash = @hash[key] }
-  action pop { @hash = @hash_stack.pop }
+  action inject_key { inject_key }
+  action push { push }
+  action pop { pop }
 
   DELIMITER = ','                                   >H@T @{ log(:delimiter) };
   LEVEL = '('+                                      >H@T @{ log(:level) };
@@ -41,8 +41,10 @@ module ParamsTree
       %% write init;
       %% write exec;
 
-      #@hash.inspect
-      #@hash_stack.inspect
+      puts key
+      puts @hash.inspect
+      puts @hash_stack.inspect
+
       @hash_stack.first
     end
 
@@ -65,9 +67,22 @@ module ParamsTree
     def key
       @key.pack('c*')
     end
+
+    def inject_key
+      @hash[key] = {}
+    end
+
+    def push
+      @hash_stack.push @hash; @hash = @hash[key]
+    end
+
+    def pop
+      @hash = @hash_stack.pop
+    end
   end
 end
 
-s = "default(all,usadasdid(zczxc(pio(xqwe)),cvb)),isdsdd(wow,er),sed(rew,tre,yrt(dfg,gfd))"
+#s = "default(all,usadasdid(zczxc(pio(xqwe)),cvb)),isdsdd(wow,er),sed(rew,tre,yrt(dfg,gfd))"
+s = "default,all"
 puts s
 puts ParamsTree::Parser.new.process s
