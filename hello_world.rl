@@ -6,16 +6,16 @@
   action push { @hash_stack.push @hash; @hash = @hash[key] }
   action pop { @hash = @hash_stack.pop }
 
-  DELIMITER = ([, ])+                               >H@T @{ log(:delimiter) };
+  DELIMITER = ([, ])                                >H@T @{ log(:delimiter) };
   LEVEL = ('(')+                                    >H@T @{ log(:level) };
-  END_LEVEL = (')')+                                >H@T @{ log(:end_level); p + 1 == pe and @hash[key] = {}; };
+  END_LEVEL = (')')+                                >H@T @{ log(:end_level); };
   INPUT = (any - LEVEL - END_LEVEL - DELIMITER)+    >H@T @{ log(:input); memo_key; };
 
   main := (
     INPUT
     (
       DELIMITER @inject_key @{ fnext main; } |
-      END_LEVEL DELIMITER @inject_key @pop @{ fret; } |
+      END_LEVEL DELIMITER? @inject_key @pop @{ fret; } |
       LEVEL @inject_key @push @{ fcall main; }
     )
   )*;
@@ -41,7 +41,9 @@ module ParamsTree
       %% write init;
       %% write exec;
 
-      puts @hash_stack.inspect
+      #@hash.inspect
+      #@hash_stack.inspect
+      @hash_stack.first
     end
 
     def char
@@ -66,4 +68,6 @@ module ParamsTree
   end
 end
 
-ParamsTree::Parser.new.process "default(all,usadasdid(zczxc(pio(xqwe)),cvb)),isdsdd(wow,er),sed(rew,tre,yrt(dfg,gfd))"
+s = "default(all,usadasdid(zczxc(pio(xqwe)),cvb)),isdsdd(wow,er),sed(rew,tre,yrt(dfg,gfd))"
+puts s
+puts ParamsTree::Parser.new.process s
