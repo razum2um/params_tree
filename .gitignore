@@ -20,4 +20,3 @@ tmp
 *.o
 *.a
 mkmf.log
-lib/params_tree/parser.rb
