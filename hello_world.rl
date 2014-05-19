@@ -8,7 +8,7 @@
 
   DELIMITER = ([, ])+                               >H@T @{ log(:delimiter) };
   LEVEL = ('(')+                                    >H@T @{ log(:level) };
-  END_LEVEL = (')')+                                >H@T @{ log(:end_level); p + 1 == pe and @hash[key] = {}; };
+  END_LEVEL = (')')+                                >H@T @{ log(:end_level); p + 1 == pe and inject_key; };
   INPUT = (any - LEVEL - END_LEVEL - DELIMITER)+    >H@T @{ log(:input); memo_key; };
 
   main := (
