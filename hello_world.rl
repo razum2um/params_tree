@@ -6,9 +6,9 @@
   action push { @hash_stack.push @hash; @hash = @hash[key] }
   action pop { @hash = @hash_stack.pop }
 
-  DELIMITER = ([, ])                                >H@T @{ log(:delimiter) };
-  LEVEL = ('(')+                                    >H@T @{ log(:level) };
-  END_LEVEL = (')')+                                >H@T @{ log(:end_level); };
+  DELIMITER = ','                                   >H@T @{ log(:delimiter) };
+  LEVEL = '('+                                      >H@T @{ log(:level) };
+  END_LEVEL = ')'+                                  >H@T @{ log(:end_level); };
   INPUT = (any - LEVEL - END_LEVEL - DELIMITER)+    >H@T @{ log(:input); memo_key; };
 
   main := (
