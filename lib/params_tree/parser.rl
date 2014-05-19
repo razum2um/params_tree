@@ -30,7 +30,7 @@ module ParamsTree
     end
 
     def parse(input)
-      @data = input.unpack('c*')
+      @data = input.gsub(/[^a-zA-Z,\(\)]/, '').unpack('c*')
       stack = []
 
       @log = []
@@ -88,8 +88,8 @@ module ParamsTree
   end
 end
 
-#s = "default(all,usadasdid(zczxc(pio(xqwe)),cvb)),isdsdd(wow,er),sed(rew,tre,yrt(dfg,gfd))"
+s = "default(all,usadasdid(zczxc(pio(xqwe)),cvb)),isdsdd(wow,er),sed(rew,tre,yrt(dfg,gfd))"
 #s = "default,all"
-s = "default(id,op),all"
+#s = "default(id,op),all"
 puts s
 puts ParamsTree::Parser.parse s
