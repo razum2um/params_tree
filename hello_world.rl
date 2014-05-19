@@ -1,5 +1,5 @@
 %%{
-  machine params_parser;
+  machine params_tree;
   action H { @head = p }
   action T { @tail = p }
   action inject_key { inject_key }
@@ -29,7 +29,7 @@ module ParamsTree
       %% write data;
     end
 
-    def process(input)
+    def parse(input)
       @data = input.unpack('c*')
       stack = []
 
@@ -41,11 +41,13 @@ module ParamsTree
       %% write init;
       %% write exec;
 
-      puts key
-      puts @hash.inspect
-      puts @hash_stack.inspect
+      inject_key # FIXME
 
-      @hash_stack.first
+      #puts key
+      #puts @hash.inspect
+      #puts @hash_stack.inspect
+
+      @hash_stack.first || @hash
     end
 
     def chars
@@ -79,10 +81,15 @@ module ParamsTree
     def pop
       @hash = @hash_stack.pop
     end
+
+    def self.parse(string)
+      self.new.parse(string)
+    end
   end
 end
 
 #s = "default(all,usadasdid(zczxc(pio(xqwe)),cvb)),isdsdd(wow,er),sed(rew,tre,yrt(dfg,gfd))"
-s = "default,all"
+#s = "default,all"
+s = "default(id,op),all"
 puts s
-puts ParamsTree::Parser.new.process s
+puts ParamsTree::Parser.parse s
