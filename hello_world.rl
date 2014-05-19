@@ -66,4 +66,4 @@ module ParamsTree
   end
 end
 
-ParamsTree::Parser.new.process "default(all,usadasdid(zczxc(pio),cvb)),isdsdd(wow,er),sed(rew,tre,yrt(dfg,gfd))"
+ParamsTree::Parser.new.process "default(all,usadasdid(zczxc(pio(xqwe)),cvb)),isdsdd(wow,er),sed(rew,tre,yrt(dfg,gfd))"
