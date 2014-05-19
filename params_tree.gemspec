@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.version       = ParamsTree::VERSION
   spec.authors       = ["Vlad Bokov"]
   spec.email         = ["razum2um@mail.ru"]
-  spec.summary       = %q{TODO: Write a short summary. Required.}
-  spec.description   = %q{TODO: Write a longer description. Optional.}
+  spec.summary       = %q{Cute helper for rabl-filters}
+  spec.description   = %q{Turns listed tree to nested hash}
   spec.homepage      = ""
   spec.license       = "MIT"
 
