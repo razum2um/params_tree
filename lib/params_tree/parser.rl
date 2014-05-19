@@ -43,10 +43,6 @@ module ParamsTree
 
       inject_key # FIXME
 
-      #puts key
-      #puts @hash.inspect
-      #puts @hash_stack.inspect
-
       @hash_stack.first || @hash
     end
 
@@ -87,9 +83,3 @@ module ParamsTree
     end
   end
 end
-
-s = "default(all,usadasdid(zczxc(pio(xqwe)),cvb)),isdsdd(wow,er),sed(rew,tre,yrt(dfg,gfd))"
-#s = "default,all"
-#s = "default(id,op),all"
-puts s
-puts ParamsTree::Parser.parse s
