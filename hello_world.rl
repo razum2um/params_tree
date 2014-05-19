@@ -46,12 +46,12 @@ module ParamsTree
       @hash_stack.first
     end
 
-    def char
+    def chars
       @data[@head..@tail]
     end
 
     def strokes
-      char.pack('c*')
+      chars.pack('c*')
     end
 
     def log(token)
@@ -59,7 +59,7 @@ module ParamsTree
     end
 
     def memo_key
-      @key = char
+      @key = chars
     end
 
     def key
