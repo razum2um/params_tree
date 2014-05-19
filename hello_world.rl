@@ -3,15 +3,21 @@
   action H { @head = p }
   action T { @tail = p }
   action inject_key { @hash[key] = {} }
+  action push { @hash_stack.push @hash; @hash = @hash[key] }
+  action pop { @hash = @hash_stack.pop }
 
-  DELIMITER = (([, ])+ | '\n')                      >H@T @{ log_event(:delimiter) };
-  LEVEL = ('(')+                                    >H@T @{ log_event(:level) };
-  END_LEVEL = (')')+                                >H@T @{ log_event(:end_level); p + 1 == pe and @hash[key] = {}; };
-  INPUT = (any - LEVEL - END_LEVEL - DELIMITER)+    >H@T @{ log_event(:input); memo_key; };
+  DELIMITER = ([, ])+                               >H@T @{ log(:delimiter) };
+  LEVEL = ('(')+                                    >H@T @{ log(:level) };
+  END_LEVEL = (')')+                                >H@T @{ log(:end_level); p + 1 == pe and @hash[key] = {}; };
+  INPUT = (any - LEVEL - END_LEVEL - DELIMITER)+    >H@T @{ log(:input); memo_key; };
 
   main := (
     INPUT
-    (DELIMITER @{ @hash[key] = {}; fnext main; } | END_LEVEL DELIMITER @{ @hash[key] = {}; @hash = @hash_stack.pop; fret; } | LEVEL @{ @hash[key] = {}; @hash_stack.push @hash; @hash = @hash[key]; fcall main; })
+    (
+      DELIMITER @inject_key @{ fnext main; } |
+      END_LEVEL DELIMITER @inject_key @pop @{ fret; } |
+      LEVEL @inject_key @push @{ fcall main; }
+    )
   )*;
 }%%
 
@@ -20,10 +26,6 @@ module ParamsTree
     attr_accessor :data
 
     def initialize
-      @events = []
-      @hash = {}
-      @hash_stack = []
-      @key = nil
       %% write data;
     end
 
@@ -31,10 +33,14 @@ module ParamsTree
       @data = input.unpack('c*')
       stack = []
 
+      @log = []
+      @hash = {}
+      @hash_stack = []
+      @key = nil
+
       %% write init;
       %% write exec;
 
-      #puts @events.inspect
       puts @hash_stack.inspect
     end
 
@@ -46,8 +52,8 @@ module ParamsTree
       char.pack('c*')
     end
 
-    def log_event(token)
-      @events << { token => strokes }
+    def log(token)
+      @log << { token => strokes }
     end
 
     def memo_key
@@ -60,4 +66,4 @@ module ParamsTree
   end
 end
 
-ParamsTree::Parser.new.process "default(all,usadasdid(zczxc(pio),cvb)),isdsdd(wow,er),sed(rew,tre,yrt)"
+ParamsTree::Parser.new.process "default(all,usadasdid(zczxc(pio),cvb)),isdsdd(wow,er),sed(rew,tre,yrt(dfg,gfd))"
