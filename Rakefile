@@ -18,7 +18,7 @@ task :publish do
 
   Bundler.with_clean_env do
     system "git tag v#{version}"
-    system "gem build params_tree.gemspec --sign"
+    system "gem build params_tree.gemspec"
     system "git push --tags"
     system "gem push params_tree-#{version}.gem"
   end

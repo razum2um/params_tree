@@ -7,7 +7,9 @@ Gem::Specification.new do |spec|
   spec.name          = "params_tree"
   spec.version       = ParamsTree::VERSION
   spec.authors       = ["Vlad Bokov"]
-  spec.email         = ["razum2um@mail.ru"]
+  spec.email         = ["bokov.vlad@gmail.com"]
+  spec.cert_chain    = ['certs/razum2um.pem']
+  spec.signing_key   = File.expand_path("~/.ssh/gem-private_key.pem") if $0 =~ /gem\z/
   spec.summary       = %q{Cute helper for rabl-filters}
   spec.description   = %q{Turns listed tree to nested hash}
   spec.homepage      = ""
