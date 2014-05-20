@@ -12,7 +12,7 @@ Gem::Specification.new do |spec|
   spec.signing_key   = File.expand_path("~/.ssh/gem-private_key.pem") if $0 =~ /gem\z/
   spec.summary       = %q{Cute helper for rabl-filters}
   spec.description   = %q{Turns listed tree to nested hash}
-  spec.homepage      = ""
+  spec.homepage      = "https://github.com/razum2um/params_tree"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0")
