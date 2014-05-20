@@ -41,7 +41,7 @@ Used for `rabl-filters`
 
 Add my public key
 
-    gem cert --add <(curl -Ls https://raw.github.com/razum2um/params_tree/master/certs/razum2um.pem)>
+    gem cert --add <(curl -Ls https://raw.github.com/razum2um/params_tree/master/certs/razum2um.pem)
 
 Add this line to your application's Gemfile:
 
