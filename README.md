@@ -1,5 +1,8 @@
 # ParamsTree
 
+[![Gem Version][GV img]][Gem Version]
+[![Build Status][BS img]][Build Status]
+
 This is a little helper to turn strings like:
 
     "default(id,user(group(division(name)),name)),post(id,title),comment(id,author,text(title,body))"
@@ -59,3 +62,6 @@ Or install it yourself as:
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create a new Pull Request
+
+[GV img]: https://badge.fury.io/rb/params_tree.png
+[BS img]: https://travis-ci.org/razum2um/params_tree.png
