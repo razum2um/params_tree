@@ -65,3 +65,5 @@ Or install it yourself as:
 
 [GV img]: https://badge.fury.io/rb/params_tree.png
 [BS img]: https://travis-ci.org/razum2um/params_tree.png
+[Gem Version]: https://rubygems.org/gems/params_tree
+[Build Status]: https://travis-ci.org/razum2um/params_tree
