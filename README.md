@@ -39,6 +39,10 @@ Used for `rabl-filters`
 
 ## Installation
 
+Add my public key
+
+    gem cert --add <(curl -Ls https://raw.github.com/razum2um/params_tree/master/certs/razum2um.pem)>
+
 Add this line to your application's Gemfile:
 
     gem 'params_tree'
@@ -49,7 +53,8 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install params_tree
+    $ gem install params_tree                 # without key
+    $ gem install params_tree -P HighSecurity # secure, with key added
 
 ## Usage
 
