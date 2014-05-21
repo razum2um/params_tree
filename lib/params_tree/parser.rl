@@ -30,7 +30,9 @@ module ParamsTree
     end
 
     def parse(input)
-      @data = input.gsub(/[^a-zA-Z,\(\)]/, '').unpack('c*')
+      input = input.gsub(/\s*/, '')
+      return {} if input.size == 0
+      @data = input.unpack('c*')
       stack = []
 
       @log = []

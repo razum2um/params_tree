@@ -105,7 +105,9 @@ self.params_tree_en_main = 2;
     end
 
     def parse(input)
-      @data = input.gsub(/[^a-zA-Z,\(\)]/, '').unpack('c*')
+      input = input.gsub(/\s*/, '')
+      return {} if input.size == 0
+      @data = input.unpack('c*')
       stack = []
 
       @log = []
@@ -114,7 +116,7 @@ self.params_tree_en_main = 2;
       @key = nil
 
       
-# line 118 "/Users/razum2um/Code/params_tree/lib/params_tree/parser.rb"
+# line 120 "/Users/razum2um/Code/params_tree/lib/params_tree/parser.rb"
 begin
 	p ||= 0
 	pe ||= data.length
@@ -122,9 +124,9 @@ begin
 	top = 0
 end
 
-# line 42 "/Users/razum2um/Code/params_tree/lib/params_tree/parser.rl"
+# line 44 "/Users/razum2um/Code/params_tree/lib/params_tree/parser.rl"
       
-# line 128 "/Users/razum2um/Code/params_tree/lib/params_tree/parser.rb"
+# line 130 "/Users/razum2um/Code/params_tree/lib/params_tree/parser.rb"
 begin
 	_klen, _trans, _keys, _acts, _nacts = nil
 	_goto_level = 0
@@ -267,7 +269,7 @@ when 11 then
 		break
 	end
  		end
-# line 271 "/Users/razum2um/Code/params_tree/lib/params_tree/parser.rb"
+# line 273 "/Users/razum2um/Code/params_tree/lib/params_tree/parser.rb"
 			end # action switch
 		end
 	end
@@ -294,7 +296,7 @@ when 11 then
 	end
 	end
 
-# line 43 "/Users/razum2um/Code/params_tree/lib/params_tree/parser.rl"
+# line 45 "/Users/razum2um/Code/params_tree/lib/params_tree/parser.rl"
 
       inject_key # FIXME
 
