@@ -7,6 +7,10 @@ class ParserTest < Minitest::Test
     ParamsTree::Parser.parse string
   end
 
+  def test_nil
+    assert_equal _(nil), {}
+  end
+
   def test_blank
     assert_equal _(""), {}
   end
