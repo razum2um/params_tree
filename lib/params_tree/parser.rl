@@ -69,11 +69,16 @@ module ParamsTree
     end
 
     def inject_key
-      @hash[key] = {}
+      if @hash.key?(key)
+        @hash[key][ParamsTree::DEFAULT] = {}
+      else
+        @hash[key] = {}
+      end
     end
 
     def push
-      @hash_stack.push @hash; @hash = @hash[key]
+      @hash_stack.push(@hash)
+      @hash = @hash[key]
     end
 
     def pop

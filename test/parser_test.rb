@@ -31,6 +31,12 @@ class ParserTest < Minitest::Test
     assert_equal _("default(user(id)), some"), { "default" => { 'user' => { 'id' => {} }, "some" => {} } }
   end
 
+  def test_mentioning_is_default
+    expected = { "options" => { "default" => {}, "redemptionLocations" => { "ordering" => {} } } }
+    assert_equal expected, _("options, options(redemptionLocations(ordering))"), expected
+    assert_equal expected, _("options(default, redemptionLocations(ordering))")
+  end
+
   def test_complicated
     assert_equal _("default(id,user(group(division(name)),name)),post(id,title),comment(id,author,text(title,body))"), {
       "default" => {
